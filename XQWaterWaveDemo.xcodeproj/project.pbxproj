@@ -15,6 +15,7 @@
 		3D8242931DB0CF98004C0382 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D8242911DB0CF98004C0382 /* LaunchScreen.storyboard */; };
 		3D82429E1DB0CF98004C0382 /* XQWaterWaveDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D82429D1DB0CF98004C0382 /* XQWaterWaveDemoTests.m */; };
 		3D8242A91DB0CF98004C0382 /* XQWaterWaveDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242A81DB0CF98004C0382 /* XQWaterWaveDemoUITests.m */; };
+		3D8242B91DB0CFF1004C0382 /* XQWtaerWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242B81DB0CFF1004C0382 /* XQWtaerWaveView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		3D8242A41DB0CF98004C0382 /* XQWaterWaveDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XQWaterWaveDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D8242A81DB0CF98004C0382 /* XQWaterWaveDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XQWaterWaveDemoUITests.m; sourceTree = "<group>"; };
 		3D8242AA1DB0CF98004C0382 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D8242B71DB0CFF1004C0382 /* XQWtaerWaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQWtaerWaveView.h; sourceTree = "<group>"; };
+		3D8242B81DB0CFF1004C0382 /* XQWtaerWaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQWtaerWaveView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,7 @@
 		3D8242821DB0CF97004C0382 /* XQWaterWaveDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3D8242B61DB0CFC9004C0382 /* XQWtaerWaveView */,
 				3D8242861DB0CF98004C0382 /* AppDelegate.h */,
 				3D8242871DB0CF98004C0382 /* AppDelegate.m */,
 				3D8242891DB0CF98004C0382 /* ViewController.h */,
@@ -138,6 +142,15 @@
 				3D8242AA1DB0CF98004C0382 /* Info.plist */,
 			);
 			path = XQWaterWaveDemoUITests;
+			sourceTree = "<group>";
+		};
+		3D8242B61DB0CFC9004C0382 /* XQWtaerWaveView */ = {
+			isa = PBXGroup;
+			children = (
+				3D8242B71DB0CFF1004C0382 /* XQWtaerWaveView.h */,
+				3D8242B81DB0CFF1004C0382 /* XQWtaerWaveView.m */,
+			);
+			name = XQWtaerWaveView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +291,7 @@
 			files = (
 				3D82428B1DB0CF98004C0382 /* ViewController.m in Sources */,
 				3D8242881DB0CF98004C0382 /* AppDelegate.m in Sources */,
+				3D8242B91DB0CFF1004C0382 /* XQWtaerWaveView.m in Sources */,
 				3D8242851DB0CF98004C0382 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
