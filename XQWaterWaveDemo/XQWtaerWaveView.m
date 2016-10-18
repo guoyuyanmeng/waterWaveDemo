@@ -15,6 +15,7 @@
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic,strong) CAShapeLayer *waveShapeLayer;
 
+
 @end
 
 @implementation XQWtaerWaveView
@@ -41,10 +42,12 @@
         
         [self ConfigParams];
         
-        [self startWave];
+        [self drawWaveLayer];
     }
     return self;
 }
+
+
 
 #pragma mark - 配置参数
 - (void)ConfigParams
@@ -61,10 +64,10 @@
 }
 
 #pragma mark - 加载layer ，绑定runloop 帧刷新
-- (void)startWave
+- (void)drawWaveLayer
 {
     [self.layer addSublayer:self.waveShapeLayer];
-    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    [self setWaveShapeLayerPath];
 }
 
 
@@ -83,7 +86,7 @@
     CGPathAddLineToPoint(path, nil, 0, self.frame.size.height);
     CGPathCloseSubpath(path);
     
-    _waveShapeLayer.path = path;
+    self.waveShapeLayer.path = path;
     
     CGPathRelease(path);
 }
@@ -111,10 +114,35 @@
 #pragma mark - Response
 - (void)getCurrentWave
 {
-    _waveOffsetX += _waveSpeed;
-    
+    _waveOffsetX += _waveSpeed *(1 + (arc4random() % (3)))/1.2;
     [self setWaveShapeLayerPath];
+}
+
+- (void) pause {
+    [self.displayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void) resume {
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+#pragma mark - button response
+
+- (void) startAnimation:(id) sender {
     
+    [self resume];
+    [super startAnimation:sender];
+    
+}
+
+- (void) resumeAnimation:(id) sender {
+    [self resume];
+    [super resumeAnimation:sender];
+}
+
+- (void) pauseAnimation:(id) sender {
+    [self pause];
+    [super pauseAnimation:sender];
 }
 
 

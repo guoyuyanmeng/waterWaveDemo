@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3D72AA021DB47AA000D1A29B /* XQCGPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA011DB47AA000D1A29B /* XQCGPathView.m */; };
+		3D72AA061DB5FFC500D1A29B /* XQTubeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA051DB5FFC500D1A29B /* XQTubeView.m */; };
+		3D72AA0A1DB6001A00D1A29B /* XQBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA091DB6001A00D1A29B /* XQBaseView.m */; };
+		3D72AA0D1DB6238F00D1A29B /* XQShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */; };
 		3D8242851DB0CF98004C0382 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242841DB0CF98004C0382 /* main.m */; };
 		3D8242881DB0CF98004C0382 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242871DB0CF98004C0382 /* AppDelegate.m */; };
 		3D82428B1DB0CF98004C0382 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D82428A1DB0CF98004C0382 /* ViewController.m */; };
@@ -39,6 +42,12 @@
 /* Begin PBXFileReference section */
 		3D72AA001DB47AA000D1A29B /* XQCGPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQCGPathView.h; sourceTree = "<group>"; };
 		3D72AA011DB47AA000D1A29B /* XQCGPathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQCGPathView.m; sourceTree = "<group>"; };
+		3D72AA041DB5FFC500D1A29B /* XQTubeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQTubeView.h; sourceTree = "<group>"; };
+		3D72AA051DB5FFC500D1A29B /* XQTubeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQTubeView.m; sourceTree = "<group>"; };
+		3D72AA081DB6001A00D1A29B /* XQBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQBaseView.h; sourceTree = "<group>"; };
+		3D72AA091DB6001A00D1A29B /* XQBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBaseView.m; sourceTree = "<group>"; };
+		3D72AA0B1DB6238F00D1A29B /* XQShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQShapeLayer.h; sourceTree = "<group>"; };
+		3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQShapeLayer.m; sourceTree = "<group>"; };
 		3D8242801DB0CF97004C0382 /* XQWaterWaveDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XQWaterWaveDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D8242841DB0CF98004C0382 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D8242861DB0CF98004C0382 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +93,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D72AA031DB5FF1600D1A29B /* XQTubeView */ = {
+			isa = PBXGroup;
+			children = (
+				3D72AA041DB5FFC500D1A29B /* XQTubeView.h */,
+				3D72AA051DB5FFC500D1A29B /* XQTubeView.m */,
+				3D72AA0B1DB6238F00D1A29B /* XQShapeLayer.h */,
+				3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */,
+			);
+			name = XQTubeView;
+			sourceTree = "<group>";
+		};
+		3D72AA071DB5FFFE00D1A29B /* XQBaseView */ = {
+			isa = PBXGroup;
+			children = (
+				3D72AA081DB6001A00D1A29B /* XQBaseView.h */,
+				3D72AA091DB6001A00D1A29B /* XQBaseView.m */,
+			);
+			name = XQBaseView;
+			sourceTree = "<group>";
+		};
 		3D8242771DB0CF97004C0382 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +136,8 @@
 		3D8242821DB0CF97004C0382 /* XQWaterWaveDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3D72AA071DB5FFFE00D1A29B /* XQBaseView */,
+				3D72AA031DB5FF1600D1A29B /* XQTubeView */,
 				3D8242B61DB0CFC9004C0382 /* XQWtaerWaveView */,
 				3D8242861DB0CF98004C0382 /* AppDelegate.h */,
 				3D8242871DB0CF98004C0382 /* AppDelegate.m */,
@@ -294,9 +325,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D72AA0D1DB6238F00D1A29B /* XQShapeLayer.m in Sources */,
 				3D82428B1DB0CF98004C0382 /* ViewController.m in Sources */,
 				3D8242881DB0CF98004C0382 /* AppDelegate.m in Sources */,
 				3D72AA021DB47AA000D1A29B /* XQCGPathView.m in Sources */,
+				3D72AA0A1DB6001A00D1A29B /* XQBaseView.m in Sources */,
+				3D72AA061DB5FFC500D1A29B /* XQTubeView.m in Sources */,
 				3D8242B91DB0CFF1004C0382 /* XQWtaerWaveView.m in Sources */,
 				3D8242851DB0CF98004C0382 /* main.m in Sources */,
 			);
