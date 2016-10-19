@@ -11,6 +11,7 @@
 		3D72AA061DB5FFC500D1A29B /* XQTubeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA051DB5FFC500D1A29B /* XQTubeView.m */; };
 		3D72AA0A1DB6001A00D1A29B /* XQBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA091DB6001A00D1A29B /* XQBaseView.m */; };
 		3D72AA0D1DB6238F00D1A29B /* XQShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */; };
+		3D7B9B7E1DB778BC000ACD62 /* XQTubeAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7B9B7D1DB778BC000ACD62 /* XQTubeAnimationView.m */; };
 		3D8242851DB0CF98004C0382 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242841DB0CF98004C0382 /* main.m */; };
 		3D8242881DB0CF98004C0382 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8242871DB0CF98004C0382 /* AppDelegate.m */; };
 		3D82428B1DB0CF98004C0382 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D82428A1DB0CF98004C0382 /* ViewController.m */; };
@@ -48,6 +49,9 @@
 		3D72AA091DB6001A00D1A29B /* XQBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQBaseView.m; sourceTree = "<group>"; };
 		3D72AA0B1DB6238F00D1A29B /* XQShapeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQShapeLayer.h; sourceTree = "<group>"; };
 		3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQShapeLayer.m; sourceTree = "<group>"; };
+		3D7B9B7B1DB7707B000ACD62 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		3D7B9B7C1DB778BC000ACD62 /* XQTubeAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQTubeAnimationView.h; sourceTree = "<group>"; };
+		3D7B9B7D1DB778BC000ACD62 /* XQTubeAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQTubeAnimationView.m; sourceTree = "<group>"; };
 		3D8242801DB0CF97004C0382 /* XQWaterWaveDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XQWaterWaveDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D8242841DB0CF98004C0382 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D8242861DB0CF98004C0382 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				3D72AA051DB5FFC500D1A29B /* XQTubeView.m */,
 				3D72AA0B1DB6238F00D1A29B /* XQShapeLayer.h */,
 				3D72AA0C1DB6238F00D1A29B /* XQShapeLayer.m */,
+				3D7B9B7C1DB778BC000ACD62 /* XQTubeAnimationView.h */,
+				3D7B9B7D1DB778BC000ACD62 /* XQTubeAnimationView.m */,
 			);
 			name = XQTubeView;
 			sourceTree = "<group>";
@@ -158,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				3D8242841DB0CF98004C0382 /* main.m */,
+				3D7B9B7B1DB7707B000ACD62 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -330,6 +337,7 @@
 				3D8242881DB0CF98004C0382 /* AppDelegate.m in Sources */,
 				3D72AA021DB47AA000D1A29B /* XQCGPathView.m in Sources */,
 				3D72AA0A1DB6001A00D1A29B /* XQBaseView.m in Sources */,
+				3D7B9B7E1DB778BC000ACD62 /* XQTubeAnimationView.m in Sources */,
 				3D72AA061DB5FFC500D1A29B /* XQTubeView.m in Sources */,
 				3D8242B91DB0CFF1004C0382 /* XQWtaerWaveView.m in Sources */,
 				3D8242851DB0CF98004C0382 /* main.m in Sources */,
@@ -417,6 +425,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = XQWaterWaveDemo/PrefixHeader.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -463,6 +473,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = XQWaterWaveDemo/PrefixHeader.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -482,6 +494,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LQHT8X75PQ;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = XQWaterWaveDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = XQWaterWaveDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kang.XQWaterWaveDemo;
@@ -494,6 +508,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LQHT8X75PQ;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = XQWaterWaveDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = XQWaterWaveDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kang.XQWaterWaveDemo;

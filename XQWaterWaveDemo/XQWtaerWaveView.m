@@ -8,8 +8,6 @@
 
 #import "XQWtaerWaveView.h"
 
-#define colorWithRGB(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
-
 @interface XQWtaerWaveView ()
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
@@ -37,7 +35,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = colorWithRGB(251, 91, 91,1);
+        self.backgroundColor = colorWithRGBA(251, 91, 91,1);
         self.layer.masksToBounds = YES;
         
         [self ConfigParams];
@@ -54,7 +52,7 @@
 {
     _waterWaveWidth = self.frame.size.width;
     _waterWaveHeight = 200;
-    _waveColor = colorWithRGB(38, 53, 94,0.8);
+    _waveColor = colorWithRGBA(38, 53, 94,0.8);
     _waveSpeed = 0.25/M_PI;
     _waveSpeed2 = 0.3/M_PI;
     _waveOffsetX = 0;

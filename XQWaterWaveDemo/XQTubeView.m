@@ -8,39 +8,47 @@
 
 #import "XQTubeView.h"
 #import "XQShapeLayer.h"
+#import "XQTubeAnimationView.h"
+@interface XQTubeView ()
+
+
+@property (nonatomic, strong) XQTubeAnimationView *animationView;
+@end
 
 @implementation XQTubeView
 
+
+#pragma mark - 初始化
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = colorWithRGB(251, 91, 91,1);
+        self.backgroundColor = colorWithRGBA(251, 91, 91,1);
         self.layer.masksToBounds = YES;
-        [self setBackgroundLaer];
+        
+        [self setSubviews];
+        
     }
     return self;
 }
 
 
-/**
- 设置背景两个红色椭圆和管道
- */
-- (void) setBackgroundLaer {
-
-    CGRect frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    UIColor *color = colorWithRGB(225, 65, 67, 1.0);
+- (void) setSubviews {
     
-    //左边椭圆
-    UIBezierPath *leftSemiPath = [UIBezierPath bezierPath];
-    CGPoint pointR = CGPointMake(101, 100);
-    [leftSemiPath addArcWithCenter:pointR radius:98 startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
-    
-    XQShapeLayer *leftEllipseLayer = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:leftSemiPath];
-    [self.layer addSublayer:leftEllipseLayer];
-    
-    //中间管道
-    
+    [self addSubview:self.animationView];
 }
+
+#pragma mark - getter
+- (UIView *) animationView {
+
+    if (!_animationView) {
+        _animationView = [[XQTubeAnimationView alloc]initWithFrame:CGRectMake(0, 0, 270, 30)];
+        _animationView.center = CGPointMake(SCREEN_WIDTH/2, 146);
+    }
+    return _animationView;
+}
+
+
+
 
 @end

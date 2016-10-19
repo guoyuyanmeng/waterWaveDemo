@@ -19,7 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = colorWithRGB(251, 91, 91,1);
+        self.backgroundColor = colorWithRGBA(251, 91, 91,1);
         self.layer.masksToBounds = YES;
         
         [self setButtons];
@@ -33,8 +33,8 @@
     _startButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _startButton.frame = CGRectMake(157.5, 20, 60, 30);
     [_startButton setBackgroundColor:[UIColor greenColor]];
-    [_startButton setTitleColor:colorWithRGB(45,100,45,1.0) forState:UIControlStateNormal];
-    [_startButton setTitleColor:colorWithRGB(30,40,70,1.0) forState:UIControlStateDisabled];
+    [_startButton setTitleColor:colorWithRGBA(45,100,45,1.0) forState:UIControlStateNormal];
+    [_startButton setTitleColor:colorWithRGBA(30,40,70,1.0) forState:UIControlStateDisabled];
     [_startButton setTitle:@"开始" forState:UIControlStateNormal];
     [_startButton.layer setCornerRadius:5.0f];
     [_startButton.layer setBorderWidth:1.0f];
@@ -44,8 +44,8 @@
     //恢复动画按钮
     _resumeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _resumeButton.frame = CGRectMake(30, 20, 60, 30);
-    [_resumeButton setBackgroundColor:colorWithRGB(70,50,70,0.8)];
-    [_resumeButton setTitleColor:colorWithRGB(45,100,45,1.0) forState:UIControlStateNormal];
+    [_resumeButton setBackgroundColor:colorWithRGBA(70,50,70,0.8)];
+    [_resumeButton setTitleColor:colorWithRGBA(45,100,45,1.0) forState:UIControlStateNormal];
     [_resumeButton setTitle:@"恢复" forState:UIControlStateNormal];
     [_resumeButton.layer setCornerRadius:5.0f];
     [_resumeButton.layer setBorderWidth:1.0f];
@@ -55,9 +55,9 @@
     
     //暂停动画按钮
     _pauseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_pauseButton setBackgroundColor:colorWithRGB(70,50,70,0.8)];
+    [_pauseButton setBackgroundColor:colorWithRGBA(70,50,70,0.8)];
     _pauseButton.frame = CGRectMake(285,20, 60, 30);
-    [_pauseButton setTitleColor:colorWithRGB(45,100,45,1.0) forState:UIControlStateNormal];
+    [_pauseButton setTitleColor:colorWithRGBA(45,100,45,1.0) forState:UIControlStateNormal];
     [_pauseButton setTitle:@"暂停" forState:UIControlStateNormal];
     [_pauseButton.layer setCornerRadius:5.0f];
     [_pauseButton.layer setBorderWidth:1.0f];
@@ -69,7 +69,7 @@
 #pragma mark - button response
 - (void) startAnimation:(id) sender {
     
-    [sender setBackgroundColor:colorWithRGB(70,50,70,0.8)];
+    [sender setBackgroundColor:colorWithRGBA(70,50,70,0.8)];
     [_startButton setEnabled:NO];
     
     [_pauseButton setEnabled:YES];
@@ -81,7 +81,7 @@
 
 - (void) resumeAnimation:(id) sender {
 
-    [sender setBackgroundColor:colorWithRGB(70,50,70,0.8)];
+    [sender setBackgroundColor:colorWithRGBA(70,50,70,0.8)];
     [_resumeButton setEnabled:NO];
     
     [_pauseButton setEnabled:YES];
@@ -90,7 +90,7 @@
 
 - (void) pauseAnimation:(id) sender {
 
-    [sender setBackgroundColor:colorWithRGB(70,50,70,0.8)];
+    [sender setBackgroundColor:colorWithRGBA(70,50,70,0.8)];
     [_pauseButton setEnabled:NO];
     
     [_resumeButton setEnabled:YES];

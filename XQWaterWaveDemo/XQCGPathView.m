@@ -8,8 +8,6 @@
 
 #import "XQCGPathView.h"
 
-#define colorWithRGB(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
-
 @interface XQCGPathView ()
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic,strong) CAShapeLayer *waveShapeLayer;
@@ -49,7 +47,7 @@
     CGPathAddLineToPoint(path, nil, 200, 200);
     CGPathAddLineToPoint(path, nil, 0, 200);
     CGPathCloseSubpath(path);
-    [colorWithRGB(38, 53, 94,0.8) setStroke];
+    [colorWithRGBA(38, 53, 94,0.8) setStroke];
     //将路径添加到绘图上下文中s
     CGContextAddPath(contextRef, path);
     //进行绘制
