@@ -13,6 +13,7 @@
 
 
 @property (nonatomic, strong) XQTubeAnimationView *animationView;
+@property (nonatomic, strong) XQTubeAnimationView *animationView2;
 @end
 
 @implementation XQTubeView
@@ -36,17 +37,30 @@
 - (void) setSubviews {
     
     [self addSubview:self.animationView];
+    
+    [self addSubview:self.animationView2];
+    
 }
 
 #pragma mark - getter
 - (UIView *) animationView {
 
     if (!_animationView) {
-        _animationView = [[XQTubeAnimationView alloc]initWithFrame:CGRectMake(0, 0, 270, 30)];
-        _animationView.center = CGPointMake(SCREEN_WIDTH/2, 146);
+        _animationView = [[XQTubeAnimationView alloc]initTubeViewWithFrame:CGRectMake(0, 0, 270, 30)];
+        _animationView.center = CGPointMake(SCREEN_WIDTH/2, 146-15);
     }
     return _animationView;
 }
+
+- (UIView *) animationView2 {
+    
+    if (!_animationView2) {
+        _animationView2 = [[XQTubeAnimationView alloc]initAnimationViewWithFrame:CGRectMake(0, 0, 270, 30)];
+        _animationView2.center = CGPointMake(SCREEN_WIDTH/2, 146+15);
+    }
+    return _animationView2;
+}
+
 
 
 

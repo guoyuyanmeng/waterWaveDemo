@@ -75,8 +75,8 @@
     [_pauseButton setEnabled:YES];
     [_pauseButton setBackgroundColor:[UIColor greenColor]];
     
-    [_resumeButton setEnabled:YES];
-    [_resumeButton setBackgroundColor:[UIColor greenColor]];
+//    [_resumeButton setEnabled:YES];
+//    [_resumeButton setBackgroundColor:[UIColor greenColor]];
 }
 
 - (void) resumeAnimation:(id) sender {
