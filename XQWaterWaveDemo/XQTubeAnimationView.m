@@ -515,19 +515,33 @@
 
 - (void) initData {
     
-    R = self.frame.size.height/2 - 4;
+//    R = self.frame.size.height/2 - 4;
+    R = self.frame.size.height/2;
     r = R/2;
-    _a = 27;
+    _a = 35;
+    
     O1 = CGPointMake(R, self.frame.size.height/2);
-    O2 = CGPointMake(R+R*2, self.frame.size.height/2);
+    O2 = CGPointMake(R*3, self.frame.size.height/2);
+    
+    O3 = CGPointMake(self.frame.size.width - R*3, self.frame.size.height/2);
+    O4 = CGPointMake(self.frame.size.width - R, self.frame.size.height/2);
+    
+    CGFloat ox = O2.x + 1.5*R*cosx(_a); // 左边两个小圆的圆心x坐标
+//    CGFloat offsetX = 1.5*R*cosx(_a); // 小圆的圆心x坐标偏移量
+    CGFloat offsetY = 1.5*R*sinx(_a); // 小圆的圆心y坐标偏移量
     
     //左方右上角圆心
-    O5 = CGPointMake(O2.x + 1.5*R*cosx(_a)  , O2.y - 1.5*R*sinx(_a));
-    O6 = CGPointMake(O2.x + 1.5*R*cosx(_a)  , O2.y + 1.5*R*sinx(_a));
+    O5 = CGPointMake(ox , self.frame.size.height/2 - offsetY);
+    O6 = CGPointMake(ox , self.frame.size.height/2 + offsetY);
+    
+    //左方右上角圆心
+    O7 = CGPointMake(self.frame.size.width - ox , self.frame.size.height/2 - offsetY);
+    O8 = CGPointMake(self.frame.size.width - ox , self.frame.size.height/2 + offsetY);
+    
 }
 
 - (void) drawLeftShapes {
-
+    
     CGRect frame = CGRectMake(0, 0, 270, self.frame.size.height);
     UIColor *color = RGB(225, 65, 67);
     
@@ -537,33 +551,62 @@
     XQShapeLayer *leftSemiShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:leftSemiPath];
     [self.layer addSublayer:leftSemiShape];
     
+    UIBezierPath *leftSemiPath2 = [UIBezierPath bezierPath];
+    [leftSemiPath2 addArcWithCenter:O4 radius:R startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:NO];
+    XQShapeLayer *leftSemiShape2 = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:leftSemiPath2];
+    [self.layer addSublayer:leftSemiShape2];
     
     //----------------------------------------maintubeShape(主体矩形形状)--------------------------------------
-    UIBezierPath *mainRecPath = [UIBezierPath bezierPath];
-    [mainRecPath moveToPoint:CGPointMake(O1.x, O1.y - R)];
-    [mainRecPath addLineToPoint:CGPointMake(O1.x, O1.y + R)];
-    [mainRecPath addLineToPoint:CGPointMake(O2.x , O2.y+R)];
-    [mainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - R)];
+    UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
+    [leftMainRecPath moveToPoint:CGPointMake(O1.x, O1.y - R)];
+    [leftMainRecPath addLineToPoint:CGPointMake(O1.x, O1.y + R)];
+    [leftMainRecPath addLineToPoint:CGPointMake(O2.x , O2.y+R)];
+    [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - R)];
+    XQShapeLayer *leftMaintubeShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:leftMainRecPath];
+    [self.layer addSublayer:leftMaintubeShape];
     
-    XQShapeLayer *maintubeShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:mainRecPath];
-    [self.layer addSublayer:maintubeShape];
+    UIBezierPath *rightMainRecPath = [UIBezierPath bezierPath];
+    [rightMainRecPath moveToPoint:CGPointMake(O4.x , O4.y - R)];
+    [rightMainRecPath addLineToPoint:CGPointMake(O4.x , O4.y + R)];
+    [rightMainRecPath addLineToPoint:CGPointMake(O3.x , O3.y+R)];
+    [rightMainRecPath addLineToPoint:CGPointMake(O3.x , O3.y - R)];
+    XQShapeLayer *rightMaintubeShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:rightMainRecPath];
+    [self.layer addSublayer:rightMaintubeShape];
     
     //-----------------------------------------rightSemiShape(右圆形状)----------------------------------------
     UIBezierPath *rightSemiPath = [UIBezierPath bezierPath];
     [rightSemiPath addArcWithCenter:O2 radius:R startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
-    
     XQShapeLayer *rightSemiShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:rightSemiPath];
     [self.layer addSublayer:rightSemiShape];
     
+    UIBezierPath *rightSemiPath2 = [UIBezierPath bezierPath];
+    [rightSemiPath2 addArcWithCenter:O3 radius:R startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:NO];
+    XQShapeLayer *rightSemiShape2 = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:rightSemiPath2];
+    [self.layer addSublayer:rightSemiShape2];
+    
     //-------------------------------------------volcanoPath(火山形状)-----------------------------------------
-    UIBezierPath *vocalnoPath = [UIBezierPath bezierPath];
-    [vocalnoPath addArcWithCenter:O5 radius:r startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-    [vocalnoPath addArcWithCenter:O6 radius:r startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+    UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
+    [leftVocalnoPath addArcWithCenter:O5 radius:r startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+    [leftVocalnoPath addArcWithCenter:O6 radius:r startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+    XQShapeLayer *leftVocalnoShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:leftVocalnoPath];
+    [self.layer addSublayer:leftVocalnoShape];
     
-    XQShapeLayer *vocalnoShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:vocalnoPath];
-    [self.layer addSublayer:vocalnoShape];
+    UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
+    [rightVocalnoPath addArcWithCenter:O7 radius:r startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
+    [rightVocalnoPath addArcWithCenter:O8 radius:r startAngle:(M_PI * 1.5) endAngle:((360 - _a)/180 * M_PI) clockwise:YES];
+    XQShapeLayer *righVocalnoShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:rightVocalnoPath];
+    [self.layer addSublayer:righVocalnoShape];
     
-    
+    //---------------------------------------------recPath(管道形状)-----------------------------------------
+    UIBezierPath *recPath = [UIBezierPath bezierPath];
+    [recPath moveToPoint:CGPointMake(O5.x , O5.y + r)];
+    [recPath addLineToPoint:CGPointMake(O6.x , O6.y - r)];
+    [recPath addLineToPoint:CGPointMake(O8.x , O8.y - r)];
+    [recPath addLineToPoint:CGPointMake(O7.x , O7.y + r)];
+//    [recPath addLineToPoint:CGPointMake(O5.x , O5.y + r)];
+    [recPath closePath];
+    XQShapeLayer *tubeShape = [[XQShapeLayer alloc]initWithFrame:frame Color:color Path:recPath];
+    [self.layer addSublayer:tubeShape];
 }
 
 

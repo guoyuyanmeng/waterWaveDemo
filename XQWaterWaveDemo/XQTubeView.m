@@ -57,6 +57,7 @@
     if (!_animationView2) {
         _animationView2 = [[XQTubeAnimationView alloc]initAnimationViewWithFrame:CGRectMake(0, 0, 270, 30)];
         _animationView2.center = CGPointMake(SCREEN_WIDTH/2, 146+15);
+//        _animationView2.backgroundColor = [UIColor blackColor];
     }
     return _animationView2;
 }
