@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 @interface XQTubeAnimationView : UIView
 
-- (instancetype)initTubeViewWithFrame:(CGRect)frame;
-- (instancetype)initAnimationViewWithFrame:(CGRect)frame;
+- (void) pause;
+- (void) resume;
+
 @end

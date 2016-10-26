@@ -11,9 +11,8 @@
 #import "XQTubeAnimationView.h"
 @interface XQTubeView ()
 
-
 @property (nonatomic, strong) XQTubeAnimationView *animationView;
-@property (nonatomic, strong) XQTubeAnimationView *animationView2;
+
 @end
 
 @implementation XQTubeView
@@ -38,32 +37,37 @@
     
     [self addSubview:self.animationView];
     
-    [self addSubview:self.animationView2];
-    
 }
 
 #pragma mark - getter
 - (UIView *) animationView {
 
     if (!_animationView) {
-        _animationView = [[XQTubeAnimationView alloc]initTubeViewWithFrame:CGRectMake(0, 0, 270, 30)];
+        _animationView = [[XQTubeAnimationView alloc]initWithFrame:CGRectMake(0, 0, 270, 30)];
         _animationView.center = CGPointMake(SCREEN_WIDTH/2, 146-15);
     }
     return _animationView;
 }
 
-- (UIView *) animationView2 {
+#pragma mark - button response
+
+
+- (void) startAnimation:(id) sender {
     
-    if (!_animationView2) {
-        _animationView2 = [[XQTubeAnimationView alloc]initAnimationViewWithFrame:CGRectMake(0, 0, 270, 30)];
-        _animationView2.center = CGPointMake(SCREEN_WIDTH/2, 146+15);
-//        _animationView2.backgroundColor = [UIColor blackColor];
-    }
-    return _animationView2;
+    [self.animationView resume];
+    [super startAnimation:sender];
+    
 }
 
+- (void) resumeAnimation:(id) sender {
+    [self.animationView resume];
+    [super resumeAnimation:sender];
+}
 
-
+- (void) pauseAnimation:(id) sender {
+    [self.animationView pause];
+    [super pauseAnimation:sender];
+}
 
 
 @end
