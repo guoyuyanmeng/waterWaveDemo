@@ -26,6 +26,13 @@
     
     [self setTubeView];
     
+//    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 75, 200, 200)];
+//    imageview.layer.cornerRadius = 100;
+//    imageview.layer.borderWidth = 50;
+//    imageview.image = [UIImage imageNamed:@"csdn"];
+//    imageview.layer.borderColor = [UIColor greenColor].CGColor;
+//    [self.view addSubview:imageview];
+    
 //    [self drawPath];
 }
 
