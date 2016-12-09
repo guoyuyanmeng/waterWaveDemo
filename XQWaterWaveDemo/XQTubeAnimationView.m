@@ -509,20 +509,29 @@
     CGFloat ox = O2.x + 1.5*r*cosx(_a);
     CGFloat offy = 1.5*r*sinx(_a);
     
-    if (endX > O2.x + r * cosx(_a) && endX <= O2.x + 1.5*r * cosx(_a)) {
+    CGFloat bx = O2.x + r*cosx(_a);
+    CGFloat ex = O2.x + 1.5*r*cosx(_a);
+    
+    if (endX >= bx && endX <= ex) {
         
         UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
         
-    }else if (beginX > O2.x + r * cosx(_a) && beginX <= O2.x + 1.5*r * cosx(_a)) {
+    }else if (beginX >= bx && beginX <= ex) {
         
         UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
         
+    }else if (beginX < bx && endX > ex) {
+    
+        UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+        self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
     }else {
         
         self.leftVolcanoShape.path = [UIBezierPath bezierPath].CGPath;
@@ -535,8 +544,10 @@
     CGFloat ox = O3.x - 1.5*r*cosx(_a);
     CGFloat offy = 1.5*r*sinx(_a);
     
-    if (endX < O3.x - r * cosx(_a)) {
-        
+    CGFloat ex = O3.x - r*cosx(_a);
+    CGFloat bx = O3.x - 1.5*r*cosx(_a);
+    
+    if (endX >= bx && endX <= ex) {
         
         UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
         [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y - offy) radius:r/2 startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
@@ -544,13 +555,23 @@
 
         self.rightVolcanoShape.path = rightVocalnoPath.CGPath;
         
-    }else if (beginX >= O3.x - r * cosx(_a)) {
+    }else if (beginX >= bx && beginX <= ex) {
         
         UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
         [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y - offy) radius:r/2 startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
         [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y + offy) radius:r/2 startAngle:(M_PI *1.5) endAngle:(M_PI * (360 - _a)/180) clockwise:YES];
         self.rightVolcanoShape.path = rightVocalnoPath.CGPath;
         
+    }else if (beginX < bx && endX > ex) {
+        
+        UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y - offy) radius:r/2 startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y + offy) radius:r/2 startAngle:(M_PI *1.5) endAngle:(M_PI * (360 - _a)/180) clockwise:YES];
+        self.rightVolcanoShape.path = rightVocalnoPath.CGPath;
+        
+    }else {
+        
+        self.rightVolcanoShape.path = [UIBezierPath bezierPath].CGPath;
     }
 }
 
