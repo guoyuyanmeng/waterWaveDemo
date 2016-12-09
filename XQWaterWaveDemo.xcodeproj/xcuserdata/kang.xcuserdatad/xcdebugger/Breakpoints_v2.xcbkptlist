@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XQWaterWaveDemo/XQWtaerWaveView.m"
-            timestampString = "498562580.183025"
+            filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
+            timestampString = "502974881.314295"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-pause"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
+            landmarkName = "-test"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XQWaterWaveDemo/XQWtaerWaveView.m"
-            timestampString = "498562580.183025"
+            filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
+            timestampString = "502958122.48384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "-displayLink"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
+            landmarkName = "-drawLeftRectWithBeignPointX:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XQWaterWaveDemo/XQWtaerWaveView.m"
-            timestampString = "498562580.183025"
+            filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
+            timestampString = "502957673.417173"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-resume"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "-drawLeftRectWithBeignPointX:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

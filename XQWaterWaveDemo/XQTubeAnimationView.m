@@ -116,8 +116,8 @@
 - (void) initData {
     
     //    R = self.frame.size.height/2 - 4;
-    R = self.frame.size.height/2;
-    r = R - 2;
+    R = self.frame.size.height/2; //背景大圆半径
+    r = R - 4; // 动画大圆半径
     space = R - r;
     _a = 35;
     
@@ -140,6 +140,8 @@
     O8 = CGPointMake(self.frame.size.width - ox , self.frame.size.height/2 + offsetY);
     
     d = 0;
+    
+    b = 2;
     
     tubeH = r * (3*sinx(_a) - 1);
 }
@@ -360,114 +362,266 @@
     [self.layer addSublayer:tubeShape];
 }
 
+
 #pragma mark - animation shapes
 
-/**
- 动画初始状态
- */
-- (void) drawAnimationBeginState {
+/******************************************  Semi  *****************************************/
+
+- (void) drawLeftSemiWithBeginPointX:(CGFloat) pointX {
     
-    UIBezierPath *leftSemiPath = [UIBezierPath bezierPath];
-    [leftSemiPath addArcWithCenter:CGPointMake(O1.x , O1.y) radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
+    if (pointX <= O1.x - r) {
+        UIBezierPath *leftSemiPath = [UIBezierPath bezierPath];
+        [leftSemiPath addArcWithCenter:O1 radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
+        self.leftSemiShape.path = leftSemiPath.CGPath;
+    }else if (pointX <= O2.x - r) {
+        
+        UIBezierPath *leftSemiPath = [UIBezierPath bezierPath];
+        [leftSemiPath addArcWithCenter:CGPointMake( pointX + r , O1.y) radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
+        self.leftSemiShape.path = leftSemiPath.CGPath;
+    }else {
+        self.leftSemiShape.path = [UIBezierPath bezierPath].CGPath;
+    }
+}
+
+
+- (void) drawRightSemiWithEndPointX:(CGFloat) pointX {
+    
+    if ( pointX >= O4.x +r) {
+        UIBezierPath *rightSemiPath = [UIBezierPath bezierPath];
+        [rightSemiPath addArcWithCenter:O4 radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
+        self.rightSemiShape.path = rightSemiPath.CGPath;
+    }else if (pointX >= O3.x + r) {
+        
+        UIBezierPath *rightSemiPath = [UIBezierPath bezierPath];
+        [rightSemiPath addArcWithCenter:CGPointMake( pointX - r , O1.y) radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
+        self.rightSemiShape.path = rightSemiPath.CGPath;
+    }else {
+        
+        self.rightSemiShape.path = [UIBezierPath bezierPath].CGPath;
+    }
+}
+
+/******************************************  Rect  *****************************************/
+
+- (void) drawLeftRectWithBeignPointX:(CGFloat) pointX {
+//    NSLog(@"point+r=%f, O2.x=%f",pointX +r, O2.x);
+    if (pointX +r <= O1.x) {
+        
+        UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
+        [leftMainRecPath moveToPoint:CGPointMake(O1.x, O1.y - r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(O1.x, O1.y + r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y + r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - r)];
+        self.leftRectShape.path = leftMainRecPath.CGPath;
+        
+    }else if(pointX +r <= O2.x) {
+    
+        UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
+        [leftMainRecPath moveToPoint:CGPointMake(pointX + r, O1.y - r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(pointX + r, O1.y + r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y + r)];
+        [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - r)];
+        self.leftRectShape.path = leftMainRecPath.CGPath;
+
+    }else {
+    
+        self.leftRectShape.path = [UIBezierPath bezierPath].CGPath;
+    }
    
-    UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
-    [leftMainRecPath moveToPoint:CGPointMake(O1.x , O1.y - r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O1.x, O1.y + r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O2.x  , O2.y+r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - r)];
+}
+
+- (void) drawRightRectWithEndPointX:(CGFloat) pointX {
     
+    if (pointX -r >=O4.x) {
+        
+        UIBezierPath *rightMainRecPath = [UIBezierPath bezierPath];
+        [rightMainRecPath moveToPoint:CGPointMake(O3.x , O3.y - r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(O3.x, O3.y + r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(O4.x  , O4.y+r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(O4.x, O4.y - r)];
+        self.rightRectShape.path = rightMainRecPath.CGPath;
+        
+    }else if(pointX -r >=O3.x) {
+        
+        UIBezierPath *rightMainRecPath = [UIBezierPath bezierPath];
+        [rightMainRecPath moveToPoint:CGPointMake(O3.x , O3.y - r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(O3.x, O3.y + r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(pointX -r, O3.y + r)];
+        [rightMainRecPath addLineToPoint:CGPointMake(pointX -r, O3.y - r)];
+        self.rightRectShape.path = rightMainRecPath.CGPath;
+        
+    }else {
+        
+        self.rightRectShape.path = [UIBezierPath bezierPath].CGPath;
+    }
     
-    UIBezierPath *rightSemiPath = [UIBezierPath bezierPath];
-    [rightSemiPath addArcWithCenter:CGPointMake(O2.x , O2.y) radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
+}
+
+/*****************************************     circle     ********************************************/
+
+- (void) drawLeftCircleWithBeginPointX:(CGFloat) pointX {
     
-    [leftSemiPath appendPath:leftMainRecPath];
-    [leftSemiPath appendPath:rightSemiPath];
-    
-    self.leftSemiShape.path = leftSemiPath.CGPath;
+    if (pointX  <= O2.x - r) {
+        UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
+        [leftCirclePath addArcWithCenter:O2 radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
+        self.leftCircleShape.path = leftCirclePath.CGPath;
+        
+    }else if (pointX <= 1.5*cosx(_a) +O2.x - tubeH/2) {
+        
+        CGFloat circleR = r-(pointX -(O2.x -r))/2;
+        UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
+        [leftCirclePath addArcWithCenter:CGPointMake( pointX + circleR , O2.y) radius:circleR startAngle:(0 * M_PI) endAngle:(2 * M_PI) clockwise:YES];
+        self.leftCircleShape.path = leftCirclePath.CGPath;
+    }else {
+        
+        self.leftCircleShape.path = [UIBezierPath bezierPath].CGPath;
+    }
 }
 
 
-- (void) drawAnimationBeginWithSemi {
-
-    UIBezierPath *leftSemiPath = [UIBezierPath bezierPath];
-    [leftSemiPath addArcWithCenter:CGPointMake(O1.x  + b, O1.y) radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
-    self.leftSemiShape.path = leftSemiPath.CGPath;
+- (void) drawRightCircleWithEndPointX:(CGFloat) pointX {
     
-    UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
-    [leftMainRecPath moveToPoint:CGPointMake(O1.x + b, O1.y - r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O1.x + b, O1.y + r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O2.x  , O2.y+r)];
-    [leftMainRecPath addLineToPoint:CGPointMake(O2.x, O2.y - r)];
-    self.leftRectShape.path = leftMainRecPath.CGPath;
-    
-    UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
-    [leftCirclePath addArcWithCenter:CGPointMake(O2.x , O2.y) radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
-    self.leftCircleShape.path = leftCirclePath.CGPath;
-    
-    CGFloat ox = O2.x + 1.5*r*cosx(_a); // 左边两个小圆的圆心x坐标
-    CGFloat offsetY = 1.5*r*sinx(_a); // 小圆的圆心y坐标偏移量
-    
-    UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-    [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offsetY) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-    [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offsetY) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
-    self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
-
-    CGFloat beginX = O2.x + 1.5*r*cosx(_a);
-    CGFloat tubeW = (2*b)/(3*sinx(_a) - 1);
-    
-    UIBezierPath *tubePath = [UIBezierPath bezierPath];
-    [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX +tubeW  , O2.y+tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX +tubeW, O2.y - tubeH/2)];
-    self.tubeShape.path = tubePath.CGPath;
-    
-    NSLog(@"tubeH:%f",tubeH);
+    if (pointX  >= O3.x + r) {
+        
+        UIBezierPath *rightCirclePath = [UIBezierPath bezierPath];
+        [rightCirclePath addArcWithCenter:O3 radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
+        self.rightCircleShape.path = rightCirclePath.CGPath;
+        
+    }else if (pointX >= O3.x - 1.5*cosx(_a) + tubeH/2) {
+        
+        CGFloat circleR = r-((O3.x +r) - pointX)/2;
+        UIBezierPath *rightCirclePath = [UIBezierPath bezierPath];
+        [rightCirclePath addArcWithCenter:CGPointMake( pointX - circleR , O3.y) radius:circleR startAngle:(0 * M_PI) endAngle:(2 * M_PI) clockwise:YES];
+        self.rightCircleShape.path = rightCirclePath.CGPath;
+        
+    }else {
+        
+        self.rightCircleShape.path = [UIBezierPath bezierPath].CGPath;
+    }
 }
 
-- (void) drawAnimationBeginWithCircle {
+
+
+/*****************************************     Vocalno     ********************************************/
+
+- (void) drawLeftVocalnoWithBeiginPoinX:(CGFloat) beginX EndPointX:(CGFloat) endX {
+
+    CGFloat ox = O2.x + 1.5*r*cosx(_a);
+    CGFloat offy = 1.5*r*sinx(_a);
     
-    self.leftSemiShape.path = [UIBezierPath bezierPath].CGPath;
-    
-    CGFloat circleR = r-(b -2*R)/2;
-    UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
-    [leftCirclePath addArcWithCenter:CGPointMake(O2.x + b -2*R , O2.y) radius:circleR startAngle:(0 * M_PI) endAngle:(2 * M_PI) clockwise:YES];
-    self.leftCircleShape.path = leftCirclePath.CGPath;
-    
-    CGFloat ox = O2.x + 1.5*r*cosx(_a); // 左边两个小圆的圆心x坐标
-    CGFloat offsetY = 1.5*r*sinx(_a); // 小圆的圆心y坐标偏移量
-    
-    UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-    [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offsetY) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-    [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offsetY) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
-    self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
-    
-    CGFloat beginX = O2.x + 1.5*r*cosx(_a);
-    CGFloat tubeW = ((2*r*r) + M_PI *(r*r -circleR*circleR))/tubeH;
-    
-    UIBezierPath *tubePath = [UIBezierPath bezierPath];
-    [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX +tubeW  , O2.y+tubeH/2)];
-    [tubePath addLineToPoint:CGPointMake(beginX +tubeW, O2.y - tubeH/2)];
-    self.tubeShape.path = tubePath.CGPath;
-    
-    NSLog(@"tubeW:%f",tubeW);
+    if (endX > O2.x + r * cosx(_a) && endX <= O2.x + 1.5*r * cosx(_a)) {
+        
+        UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+        self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
+        
+    }else if (beginX > O2.x + r * cosx(_a) && beginX <= O2.x + 1.5*r * cosx(_a)) {
+        
+        UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+        self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
+        
+    }else {
+        
+        self.leftVolcanoShape.path = [UIBezierPath bezierPath].CGPath;
+    }
 }
+
+
+- (void) drawRightVocalnoWithBeiginPoinX:(CGFloat) beginX EndPointX:(CGFloat) endX {
+    
+    CGFloat ox = O3.x - 1.5*r*cosx(_a);
+    CGFloat offy = 1.5*r*sinx(_a);
+    
+    if (endX < O3.x - r * cosx(_a)) {
+        
+        
+        UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y - offy) radius:r/2 startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y + offy) radius:r/2 startAngle:(M_PI *1.5) endAngle:( M_PI * (360 - _a)/180) clockwise:YES];
+
+        self.rightVolcanoShape.path = rightVocalnoPath.CGPath;
+        
+    }else if (beginX >= O3.x - r * cosx(_a)) {
+        
+        UIBezierPath *rightVocalnoPath = [UIBezierPath bezierPath];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y - offy) radius:r/2 startAngle:(M_PI * _a/180) endAngle:(M_PI * 0.5) clockwise:YES];
+        [rightVocalnoPath addArcWithCenter:CGPointMake(ox, O3.y + offy) radius:r/2 startAngle:(M_PI *1.5) endAngle:(M_PI * (360 - _a)/180) clockwise:YES];
+        self.rightVolcanoShape.path = rightVocalnoPath.CGPath;
+        
+    }
+}
+
+/*****************************************     Tube animation     ********************************************/
+
+- (void) drawTuberWithBeginPointX:(CGFloat) beginX EndPointX:(CGFloat) endX {
+
+    CGFloat bx = O2.x + 1.5*r*cosx(_a);
+    CGFloat ex = O3.x - 1.5*r*cosx(_a);
+    
+    if (beginX < bx && endX > bx){
+    
+        UIBezierPath *tubePath = [UIBezierPath bezierPath];
+        [tubePath moveToPoint:CGPointMake(bx, O2.y - tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(bx, O2.y + tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(endX, O2.y+tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(endX, O2.y - tubeH/2)];
+        self.tubeShape.path = tubePath.CGPath;
+        
+    }else if (beginX >= bx && endX <= ex) {
+    
+        UIBezierPath *tubePath = [UIBezierPath bezierPath];
+        [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(endX, O2.y+tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(endX, O2.y - tubeH/2)];
+        self.tubeShape.path = tubePath.CGPath;
+        
+    }else if (beginX >= bx && beginX <= ex && endX > ex) {
+        
+        UIBezierPath *tubePath = [UIBezierPath bezierPath];
+        [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(ex, O2.y+tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(ex, O2.y - tubeH/2)];
+        self.tubeShape.path = tubePath.CGPath;
+        
+    }else {
+    
+        self.tubeShape.path = [UIBezierPath bezierPath].CGPath;
+    }
+}
+
+
+/**************************************************************************************************************/
 
 
 #pragma mark - Response
 
 - (void) drawAnimationShapes {
     
-    if (b == 0) {
-        [self drawAnimationBeginState];
-    }else if (b <= R*2) {
-        [self drawAnimationBeginWithSemi];
-    }else if (b <= R*2 + r*cosx(_a)) {
-        [self drawAnimationBeginWithCircle];
-    }
     
+//    if (b == 0) {
+//        [self test];
+//        [self circleArea];
+//    }
+    
+    e = b + O2.x +r ;
+    [self drawLeftSemiWithBeginPointX:b];
+    [self drawRightSemiWithEndPointX:e];
+    
+    [self drawLeftRectWithBeignPointX:b];
+    [self drawRightRectWithEndPointX:e];
+    
+    [self drawLeftCircleWithBeginPointX:b];
+    [self drawRightCircleWithEndPointX:e];
+    
+    [self drawLeftVocalnoWithBeiginPoinX:b EndPointX:e];
+    [self drawRightVocalnoWithBeiginPoinX:b EndPointX:e];
+    
+    [self drawTuberWithBeginPointX:b EndPointX:e];
     
     b += 0.5;
 }
@@ -485,15 +639,52 @@
 
 
 -(void)test {
+    
+    // 将火山分解成多个矩形计算面积
+    double vocalnoShapesArea = 0;
+    double dx = r *cosx(_a)/100000;//x增量
+    
+    for (int  i = 0; i < 100000 ; i++) {
+    
+        double triangleA = (R+r) *sinx(_a); //三角形高
+        double triangleB = (R+r) *cosx(_a) - dx*i;//三角形底边
+        
+        double tanx = triangleA / triangleB;
+        double angle = atan(tanx);
+        
+        double dH = ((r+R) *sinx(_a) - r *sin(angle)); // y增量，分解火山口矩形的动态高度
+        
+        double area = dH *dx;
+        
+        vocalnoShapesArea = vocalnoShapesArea +area;
+        
+        
+        UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
+        [leftMainRecPath moveToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i, O2.y -dH/2)];
+        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i, O2.y -dH/2 +dH)];
+        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i +dx, O2.y -dH/2 +dH)];
+        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i +dx,  O2.y -dH/2)];
+        
+        XQShapeLayer *leftSemiShape2 = [[XQShapeLayer alloc]initWithFrame:self.shapeFrame Color:self.shapeColor Path:leftMainRecPath];
+        [self.layer addSublayer:leftSemiShape2];
+        
+        CGFloat ox = O2.x + 1.5*r*cosx(_a); // 左边两个小圆的圆心x坐标
+        CGFloat offsetY = 1.5*r*sinx(_a); // 小圆的圆心y坐标偏移量
+        
+        UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offsetY) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offsetY) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
 
-    CGFloat Ssector = 1/2 *R*R * (_a/180)*M_PI; //大扇形面积。扇形面积计算公式：1/2×弧长×半径。弧长公式：弧长=半径×弧度
-    CGFloat Striangle = R*R*sinx(_a)*cosx(_a);
+    }
     
-    CGFloat Sarc = Ssector - Striangle;
+    NSLog(@"vocalnoShapesArea = %f",vocalnoShapesArea);
     
-    NSLog(@"大圆弧面积:%f",Sarc);
-    
-    
+}
+
+- (void) circleArea {
+
+    double area = R * R * M_PI;
+    NSLog(@"area = %f",area);
 }
 
 
