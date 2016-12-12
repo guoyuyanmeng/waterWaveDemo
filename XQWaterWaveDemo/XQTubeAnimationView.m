@@ -141,7 +141,9 @@
     
     d = 0;
     
-    b = 2;
+//    b = 2;
+    
+    b = O2.x - r;
     
     tubeH = r * (3*sinx(_a) - 1);
 }
@@ -513,17 +515,42 @@
     CGFloat ex = O2.x + 1.5*r*cosx(_a);
     
     if (endX >= bx && endX <= ex) {
+        //        A
+        //       /|
+        //      / |
+        //     /  |
+        //    /   |
+        //  B/____|C
         
+        CGFloat AC = 1.5*r*sinx(_a);
+        CGFloat BC = 1.5*r*cosx(_a) - (endX - O2.x - r*cosx(_a));
+        CGFloat tanBAC = BC/AC;
+        CGFloat BAC = atan(tanBAC);
+        NSLog(@"endX BAC=%f",BAC/M_PI*180);
         UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(0.5*M_PI + BAC) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5*M_PI-BAC) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
         
-    }else if (beginX >= bx && beginX <= ex) {
+    }else if (beginX >= O2.x - r && beginX <= O2.x + 1.5*r*cosx(_a) - tubeH/2) {
         
+        //        A
+        //       /|
+        //      / |
+        //     /  |
+        //    /   |
+        //  B/____|C
+        
+        CGFloat circleR = r-(beginX -(O2.x -r))/2;
+        
+        CGFloat AB = circleR + r/2;
+        CGFloat AC = 1.5*r*sinx(_a);
+        CGFloat cosBAC = AC/AB;
+        CGFloat BAC = acos(cosBAC);
+        NSLog(@"beginX BAC= %f",BAC/M_PI*180);
         UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * 0.5 + BAC) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:(1.5 *M_PI - BAC) endAngle:(1.5 *M_PI) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
         
     }else if (beginX < bx && endX > ex) {
@@ -532,6 +559,9 @@
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
         [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
+        
+        NSLog(@"nornal volvano");
+        
     }else {
         
         self.leftVolcanoShape.path = [UIBezierPath bezierPath].CGPath;
@@ -629,22 +659,26 @@
 //        [self circleArea];
 //    }
     
-    e = b + O2.x +r ;
-    [self drawLeftSemiWithBeginPointX:b];
-    [self drawRightSemiWithEndPointX:e];
-    
-    [self drawLeftRectWithBeignPointX:b];
-    [self drawRightRectWithEndPointX:e];
-    
-    [self drawLeftCircleWithBeginPointX:b];
-    [self drawRightCircleWithEndPointX:e];
-    
+    e = b + O2.x +r*cosx(_a);
+//    [self drawLeftSemiWithBeginPointX:b];
+//    [self drawRightSemiWithEndPointX:e];
+//    
+//    [self drawLeftRectWithBeignPointX:b];
+//    [self drawRightRectWithEndPointX:e];
+//    
+//    [self drawLeftCircleWithBeginPointX:b];
+//    [self drawRightCircleWithEndPointX:e];
+//    
     [self drawLeftVocalnoWithBeiginPoinX:b EndPointX:e];
     [self drawRightVocalnoWithBeiginPoinX:b EndPointX:e];
     
-    [self drawTuberWithBeginPointX:b EndPointX:e];
+//    [self drawTuberWithBeginPointX:b EndPointX:e];
     
-    b += 0.5;
+    b += 0.05;
+//    if (b < O2.x + 1.5*r*cosx(_a) - tubeH/2) {
+//        b += 0.05;
+//    }
+    
 }
 
 
@@ -654,6 +688,7 @@
 
 - (void) resume {
     
+//    b = O2.x - r;
     b = 0;
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 }
