@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
-            timestampString = "503225711.711103"
+            timestampString = "503314679.758585"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "698"
-            endingLineNumber = "698"
+            startingLineNumber = "759"
+            endingLineNumber = "759"
             landmarkName = "-test"
             landmarkType = "7">
          </BreakpointContent>
@@ -22,16 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
-            timestampString = "503223055.122279"
+            timestampString = "503314679.758585"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
-            landmarkName = "-drawLeftRectWithBeignPointX:"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
+            landmarkName = "-drawRightVocalnoWithDynamic_CenterX1:Dynamic_CenterX2:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,28 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
-            timestampString = "503223055.122279"
+            timestampString = "503309445.094394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
-            landmarkName = "-drawLeftRectWithBeignPointX:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XQWaterWaveDemo/XQTubeAnimationView.m"
-            timestampString = "503229428.675689"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
-            landmarkName = "-drawLeftVocalnoWithBeiginPoinX:EndPointX:"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "-drawLeftCircleWithDynamic_CenterX:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
