@@ -32,8 +32,8 @@
     
     CGFloat tubeH; // tube 高度
     
-    CGFloat dynamic_O1x;
-    CGFloat dynamic_O4x;
+    CGFloat dynamic_x1;
+    CGFloat dynamic_x2;
     
 }
 @property (nonatomic, assign) double a;                             /// 大圆、小圆圆心连线与x轴的夹角
@@ -58,7 +58,8 @@
 @property (nonatomic, assign) CGRect shapeFrame;                    /// 动画布景frame
 @property (nonatomic, strong) UIColor *shapeColor;                  /// 动画颜色
 @property (nonatomic, strong) UIColor *baseColor;                  /// 动画颜色
-@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, strong) CADisplayLink *rightDisplayLink;
+@property (nonatomic, strong) CADisplayLink *leftDisplayLink;
 
 //@property (nonatomic, assign) double r1;
 //@property (nonatomic, assign) double r2;
@@ -113,7 +114,7 @@
     [self.layer addSublayer:self.tubeShape];
 
     
-    [self drawLiletCicle];
+    //[self drawLiletCicle];
 }
 
 
@@ -267,12 +268,20 @@
 }
 
 #pragma mark director
-- (CADisplayLink *)displayLink
+- (CADisplayLink *)rightDisplayLink
 {
-    if (!_displayLink) {
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawAnimationShapes)];
+    if (!_rightDisplayLink) {
+        _rightDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(rightDisplayLinkAction)];
     }
-    return _displayLink;
+    return _rightDisplayLink;
+}
+
+- (CADisplayLink *)leftDisplayLink
+{
+    if (!_leftDisplayLink) {
+        _leftDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(leftDisplayLinkAction)];
+    }
+    return _leftDisplayLink;
 }
 
 
@@ -471,10 +480,10 @@
     if (dynamic_x  <= O2.x) {
         
         UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
-        [leftCirclePath addArcWithCenter:O2 radius:r startAngle:(1.5 * M_PI) endAngle:(0.5 * M_PI) clockwise:YES];
+        [leftCirclePath addArcWithCenter:O2 radius:r startAngle:(0) endAngle:(2 * M_PI) clockwise:YES];
         self.leftCircleShape.path = leftCirclePath.CGPath;
         
-    }else if (dynamic_x <= 1.5*cosx(_a) +O2.x) {
+    }else if (dynamic_x <= 1.5*cosx(_a)*r +O2.x) {
 
         CGFloat dx = dynamic_x - O2.x;
         CGFloat constant_x = 1.5 *cosx(_a) *r;
@@ -497,10 +506,10 @@
     if (dynamic_x  >= O3.x) {
         
         UIBezierPath *rightCirclePath = [UIBezierPath bezierPath];
-        [rightCirclePath addArcWithCenter:O3 radius:r startAngle:(0.5 * M_PI) endAngle:(1.5 * M_PI) clockwise:YES];
+        [rightCirclePath addArcWithCenter:O3 radius:r startAngle:(0) endAngle:(2 * M_PI) clockwise:YES];
         self.rightCircleShape.path = rightCirclePath.CGPath;
         
-    }else if (dynamic_x >= O3.x - 1.5*cosx(_a)) {
+    }else if (dynamic_x >= O3.x - 1.5*cosx(_a)*r) {
         
         CGFloat dx = O3.x - dynamic_x;
         CGFloat constant_x = 1.5 *cosx(_a) *r;
@@ -527,11 +536,7 @@
     CGFloat bx = O2.x;
     CGFloat ex = O2.x + 1.5*r*cosx(_a);
     
-    if (endX > bx && endX < ex) {
-        
-//        CGFloat dynamic_x = endX - O2.x - r*cosx(_a);
-//        CGFloat constant_x = 0.5 *cosx(_a) *r;
-//        CGFloat dynamic_a =  dynamic_x/constant_x *(90 -_a) /180 *M_PI;
+    if (endX >= bx && endX <= ex) {
         
         CGFloat tan_dynamic_a = 1.5*sinx(_a)*r / (ex - endX);
         CGFloat dynamic_a = atan(tan_dynamic_a);
@@ -544,18 +549,13 @@
         
     }else if (beginX > bx && beginX < ex) {
         
-        
-//        CGFloat dynamic_x = beginX - O2.x - r*cosx(_a);
-//        CGFloat constant_x = 0.5 *cosx(_a) *r;
-//        CGFloat dynamic_a = (constant_x - dynamic_x)/constant_x *(90 -_a) /180 *M_PI;
-        
         CGFloat tan_dynamic_a = 1.5*sinx(_a)*r / (ex - beginX);
         CGFloat dynamic_a = atan(tan_dynamic_a);
         
         NSLog(@"Left beginX dynamic_a= %f",dynamic_a/M_PI*180);
         UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI *  -  dynamic_a) clockwise:YES];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:(M_PI + dynamic_a) endAngle:(1.5 *M_PI) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offy) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI  -  dynamic_a) clockwise:YES];
+        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offy) radius:r/2 startAngle:(M_PI + dynamic_a) endAngle:(1.5 * M_PI) clockwise:YES];
         self.leftVolcanoShape.path = leftVocalnoPath.CGPath;
         
     }else if (beginX < bx && endX > ex) {
@@ -634,26 +634,19 @@
     CGFloat bx = O2.x + 1.5*r*cosx(_a);
     CGFloat ex = O3.x - 1.5*r*cosx(_a);
     
-    if (beginX < bx && endX > bx){
+    if (beginX <= bx && endX >=bx && endX <= ex){
     
         UIBezierPath *tubePath = [UIBezierPath bezierPath];
         [tubePath moveToPoint:CGPointMake(bx, O2.y - tubeH/2)];
         [tubePath addLineToPoint:CGPointMake(bx, O2.y + tubeH/2)];
+        
         [tubePath addLineToPoint:CGPointMake(endX, O2.y+tubeH/2)];
         [tubePath addLineToPoint:CGPointMake(endX, O2.y - tubeH/2)];
+        
         self.tubeShape.path = tubePath.CGPath;
         
-    }else if (beginX >= bx && endX <= ex) {
+    }else if (beginX >=bx && beginX <= ex && endX >=ex) {
     
-        UIBezierPath *tubePath = [UIBezierPath bezierPath];
-        [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
-        [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
-        [tubePath addLineToPoint:CGPointMake(endX, O2.y+tubeH/2)];
-        [tubePath addLineToPoint:CGPointMake(endX, O2.y - tubeH/2)];
-        self.tubeShape.path = tubePath.CGPath;
-        
-    }else if (beginX >= bx && beginX <= ex && endX > ex) {
-        
         UIBezierPath *tubePath = [UIBezierPath bezierPath];
         [tubePath moveToPoint:CGPointMake(beginX, O2.y - tubeH/2)];
         [tubePath addLineToPoint:CGPointMake(beginX, O2.y + tubeH/2)];
@@ -661,148 +654,148 @@
         [tubePath addLineToPoint:CGPointMake(ex, O2.y - tubeH/2)];
         self.tubeShape.path = tubePath.CGPath;
         
+    }else if (beginX < bx && endX >=ex) {
+        
+        UIBezierPath *tubePath = [UIBezierPath bezierPath];
+        [tubePath moveToPoint:CGPointMake(bx, O2.y - tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(bx, O2.y + tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(ex, O2.y+tubeH/2)];
+        [tubePath addLineToPoint:CGPointMake(ex, O2.y - tubeH/2)];
+        self.tubeShape.path = tubePath.CGPath;
+        
     }else {
-    
+        
         self.tubeShape.path = [UIBezierPath bezierPath].CGPath;
     }
 }
-
 
 /**************************************************************************************************************/
 
 
 #pragma mark - Response
 
-- (void) drawAnimationShapes {
-    
-    
-//    [self drawLeftSemiWithDynamic_CenterX:b];
-//    [self drawRightSemiWithDynamic_CenterX:e];
-//    
-//    [self drawLeftRectWithDynamic_BeginX:b];
-//    [self drawRightRectWithDynamic_EndX:e];
-    
-    [self drawLeftCircleWithDynamic_CenterX:b];
-    [self drawRightCircleWithDynamic_CenterX:e];
 
-//    [self drawLeftVocalnoWithDynamic_CenterX1:b Dynamic_CenterX2:e];
-//    [self drawRightVocalnoWithDynamic_CenterX1:b Dynamic_CenterX2:e];
-//    
-//    [self drawTuberWithBeginPointX:b EndPointX:e];
+- (void) drawAnimationShapsWithDynamicCenterX1:(CGFloat) centerX1 DynamicCenterX2:(CGFloat) centerX2 {
+
+    [self drawLeftSemiWithDynamic_CenterX:centerX1];
+    [self drawRightSemiWithDynamic_CenterX:centerX2];
 //
-    CGFloat dx = 0.1;
-    if (b <O2.x && e <= O3.x) {
-        b += dx;
-        e += r*dx/tubeH*3;
-    }else if (b >= O2.x && e <= O3.x) {
-        b += r*dx/tubeH*3;
-        e += r*dx/tubeH*3;
-    }else if (b < O3.x  && e >= O3.x ) {
-        b += r*dx/tubeH*3;
-        e += dx;
+    [self drawLeftRectWithDynamic_BeginX:centerX1];
+    [self drawRightRectWithDynamic_EndX:centerX2];
+    
+    [self drawLeftCircleWithDynamic_CenterX:centerX1];
+    [self drawRightCircleWithDynamic_CenterX:centerX2];
+    
+    [self drawLeftVocalnoWithDynamic_CenterX1:centerX1 Dynamic_CenterX2:centerX2];
+    [self drawRightVocalnoWithDynamic_CenterX1:centerX1 Dynamic_CenterX2:centerX2];
+//
+    [self drawTuberWithBeginPointX:centerX1 EndPointX:centerX2];
+    
+}
+- (void) rightDisplayLinkAction {
+    
+    [self drawAnimationShapsWithDynamicCenterX1:dynamic_x1 DynamicCenterX2:dynamic_x2];
+    
+    if (dynamic_x1 >= O3.x && dynamic_x2 >= O4.x) {
+        
+        [self pauseRightDisplayLink];
+    }
+    
+    CGFloat dx = 1;
+    
+    if (dynamic_x1 <O2.x ) {
+        dynamic_x1 += dx;
+        dynamic_x2 += (O3.x - O2.x)/(O2.x -O1.x) *dx;
+        
+    }else if (dynamic_x1 >= O2.x ) {
+        dynamic_x1 += (O3.x - O2.x)/(O2.x -O1.x) *dx;
+        dynamic_x2 += dx;;
     }else {
-        b += dx;
-        e += dx;
+        dynamic_x1 += dx;
+        dynamic_x2 += dx;
     }
     
-//    [self drawLeft];
-    b += 0.05;
+   
+    
+    if (dynamic_x1> O3.x) {
+        dynamic_x1 = O3.x;
+        dynamic_x2 = O4.x;
+    }
+
 }
 
-
-- (void) drawLiletCicle {
-
-    UIBezierPath *rightSemiPath = [UIBezierPath bezierPath];
-    [rightSemiPath addArcWithCenter:CGPointMake(O3.x - 1.5*r*cosx(_a), O3.y - 1.5*r*sinx(_a)) radius:r/2 startAngle:0 endAngle:(2 * M_PI) clockwise:YES];
-    XQShapeLayer *rightSemiShape = [[XQShapeLayer alloc]initWithFrame:self.shapeFrame Color:self.shapeColor Path:rightSemiPath];
-    [self.layer addSublayer:rightSemiShape];
+- (void) leftDisplayLinkAction {
     
-    UIBezierPath *rightSemiPath2 = [UIBezierPath bezierPath];
-    [rightSemiPath2 addArcWithCenter:CGPointMake(O3.x - 1.5*r*cosx(_a), O3.y + 1.5*r*sinx(_a)) radius:r/2 startAngle:0 endAngle:(2 * M_PI) clockwise:YES];
-    XQShapeLayer *rightSemiShape2 = [[XQShapeLayer alloc]initWithFrame:self.shapeFrame Color:self.shapeColor Path:rightSemiPath2];
-    [self.layer addSublayer:rightSemiShape2];
-}
-
-
-- (void) drawLeft {
+    [self drawAnimationShapsWithDynamicCenterX1:dynamic_x1 DynamicCenterX2:dynamic_x2];
     
-    if (b <= O3.x && b >= O3.x - 1.5*r*cosx(_a)) {
-        CGFloat dx = O3.x - b;
-        CGFloat constant_x = 1.5 *cosx(_a) *r;
-        CGFloat circleR = r - (r - tubeH/2) *dx/constant_x;
+    if (dynamic_x1 <= O1.x && dynamic_x2 <= O2.x) {
         
-        UIBezierPath *leftCirclePath = [UIBezierPath bezierPath];
-        [leftCirclePath addArcWithCenter:CGPointMake( b , O2.y) radius:circleR startAngle:(0 * M_PI) endAngle:(2 * M_PI) clockwise:YES];
-        self.leftCircleShape.path = leftCirclePath.CGPath;
+        [self pauseLeftDisplayLink];
+    }
+    
+    CGFloat dx = 1;
+    
+    if (dynamic_x2 <= O3.x) {
         
-        NSLog(@"circleR=%f, tubeH=%f ",circleR,tubeH/2);
+        dynamic_x1 = dynamic_x1 - (O3.x - O2.x)/(O2.x -O1.x) *dx;
+        dynamic_x2 = dynamic_x2 -(O3.x - O2.x)/(O2.x -O1.x) *dx;
+        
+    }else if ( dynamic_x2 <= O4.x) {
+        dynamic_x2 = dynamic_x2 - dx;
+        dynamic_x1 = dynamic_x1 - (O3.x - O2.x)/(O2.x -O1.x) *dx;
+    }else {
+        dynamic_x1 = dynamic_x1 - dx;
+        dynamic_x2 = dynamic_x2 - dx;
+    }
+    
+    
+    
+    
+    if (dynamic_x2< O2.x) {
+        dynamic_x1 = O1.x;
+        dynamic_x2 = O2.x;
     }
     
 }
 
 
 
-- (void) pause {
-    [self.displayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-}
-
-- (void) resume {
+- (void) pauseRightDisplayLink {
     
-    b = O1.x;
-    e =  O2.x;
-
-    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-}
-
-
--(void)test {
+//    [self.rightDisplayLink setPaused:YES];
+    [self.rightDisplayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
-    // 将火山分解成多个矩形计算面积
-    double vocalnoShapesArea = 0;
-    double dx = r *cosx(_a)/100000;//x增量
-    
-    for (int  i = 0; i < 100000 ; i++) {
-    
-        double triangleA = (R+r) *sinx(_a); //三角形高
-        double triangleB = (R+r) *cosx(_a) - dx*i;//三角形底边
-        
-        double tanx = triangleA / triangleB;
-        double angle = atan(tanx);
-        
-        double dH = ((r+R) *sinx(_a) - r *sin(angle)); // y增量，分解火山口矩形的动态高度
-        
-        double area = dH *dx;
-        
-        vocalnoShapesArea = vocalnoShapesArea +area;
-        
-        
-        UIBezierPath *leftMainRecPath = [UIBezierPath bezierPath];
-        [leftMainRecPath moveToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i, O2.y -dH/2)];
-        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i, O2.y -dH/2 +dH)];
-        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i +dx, O2.y -dH/2 +dH)];
-        [leftMainRecPath addLineToPoint:CGPointMake(3*R+R*cosx(_a)+dx*i +dx,  O2.y -dH/2)];
-        
-        XQShapeLayer *leftSemiShape2 = [[XQShapeLayer alloc]initWithFrame:self.shapeFrame Color:self.shapeColor Path:leftMainRecPath];
-        [self.layer addSublayer:leftSemiShape2];
-        
-        CGFloat ox = O2.x + 1.5*r*cosx(_a); // 左边两个小圆的圆心x坐标
-        CGFloat offsetY = 1.5*r*sinx(_a); // 小圆的圆心y坐标偏移量
-        
-        UIBezierPath *leftVocalnoPath = [UIBezierPath bezierPath];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y - offsetY) radius:r/2 startAngle:(M_PI * 0.5) endAngle:(M_PI * ((180 - _a)/180)) clockwise:YES];
-        [leftVocalnoPath addArcWithCenter:CGPointMake(ox, O2.y + offsetY) radius:r/2 startAngle:((180 + _a)/180 *M_PI) endAngle:(1.5 *M_PI) clockwise:YES];
-
-    }
-    
-    NSLog(@"vocalnoShapesArea = %f",vocalnoShapesArea);
+    //[self.leftDisplayLink setPaused:YES];
     
 }
 
-- (void) circleArea {
-
-    double area = R * R * M_PI;
-    NSLog(@"area = %f",area);
+- (void) pauseLeftDisplayLink {
+    
+//    [self.leftDisplayLink setPaused:YES];
+    [self.leftDisplayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    //[self.rightDisplayLink setPaused:YES];
 }
+
+
+
+- (void) turnRight {
+    
+    //[self.rightDisplayLink setPaused:NO];
+    dynamic_x1 = O1.x;
+    dynamic_x2 = O2.x;
+    
+    [self.rightDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void) turnLeft {
+    
+    //[self.leftDisplayLink setPaused:NO];
+    dynamic_x1 = O3.x;
+    dynamic_x2 = O4.x;
+    
+    [self.leftDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+}
+
 
 
 @end

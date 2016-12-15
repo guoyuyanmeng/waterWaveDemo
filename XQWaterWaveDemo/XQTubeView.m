@@ -37,6 +37,15 @@
     
     [self addSubview:self.animationView];
     
+    [self.startButton setHidden:YES];
+    
+    [self.resumeButton setTitle:@"--->" forState:UIControlStateNormal];
+    [self.resumeButton setEnabled:YES];
+    [self.resumeButton setBackgroundColor:[UIColor greenColor]];
+    
+    [self.pauseButton setTitle:@"<---" forState:UIControlStateNormal];
+    [self.pauseButton setEnabled:YES];
+    [self.pauseButton setBackgroundColor:[UIColor greenColor]];
 }
 
 #pragma mark - getter
@@ -51,21 +60,13 @@
 
 #pragma mark - button response
 
-
-- (void) startAnimation:(id) sender {
-    
-    [self.animationView resume];
-    [super startAnimation:sender];
-    
-}
-
 - (void) resumeAnimation:(id) sender {
-    [self.animationView resume];
+    [self.animationView turnRight];
     [super resumeAnimation:sender];
 }
 
 - (void) pauseAnimation:(id) sender {
-    [self.animationView pause];
+    [self.animationView turnLeft];
     [super pauseAnimation:sender];
 }
 

@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 @interface XQTubeAnimationView : UIView
 
-- (void) pause;
-- (void) resume;
+- (void) turnRight;
+- (void) turnLeft;
 
 @end

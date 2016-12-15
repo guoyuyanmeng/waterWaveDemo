@@ -8,9 +8,7 @@
 
 #import "XQBaseView.h"
 @interface XQBaseView ()
-@property (nonatomic, strong) UIButton *resumeButton;
-@property (nonatomic, strong) UIButton *pauseButton;
-@property (nonatomic, strong) UIButton *startButton;
+
 @end
 
 @implementation XQBaseView

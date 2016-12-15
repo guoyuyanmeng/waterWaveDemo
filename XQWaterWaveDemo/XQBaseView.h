@@ -12,6 +12,10 @@
 
 @interface XQBaseView : UIView
 
+@property (nonatomic, strong) UIButton *resumeButton;
+@property (nonatomic, strong) UIButton *pauseButton;
+@property (nonatomic, strong) UIButton *startButton;
+
 - (void) startAnimation:(id) sender;
 
 - (void) resumeAnimation:(id) sender;
